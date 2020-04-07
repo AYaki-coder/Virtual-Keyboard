@@ -60,11 +60,11 @@ html{
 
 }
 
-.keyboard__keys{
+/* .keyboard__keys{
  text-align: center;
 
 
-}
+} */
 .keyboard__key{
     height: 60px;
     width: 6%;
@@ -118,5 +118,6 @@ html{
 }
 .key_active{
     background-color: rgb(175, 35, 42); 
-    box-shadow: -3px -3px 4px 2px #00000099;
+    box-shadow: inset 1px 1px 2px 2px #00000099;
+    margin: 5px 1px 1px 5px;
 }

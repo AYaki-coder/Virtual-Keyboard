@@ -228,6 +228,27 @@ const Keyboard = {
                 document.getElementById(event).classList.add('key_active');
                 this.inputArrowRightToTextarea();
                 break;
+
+            case 'ControlLeft':
+                document.getElementById(event).classList.add('key_active');
+                break;
+
+            case 'ControlRight':
+                document.getElementById(event).classList.add('key_active');
+                break;
+
+            case 'MetaLeft':
+                document.getElementById(event).classList.add('key_active');
+                break;
+
+            case 'AltRight':
+                document.getElementById(event).classList.add('key_active');
+                break;
+
+            case 'Del':
+                document.getElementById(event).classList.add('key_active');
+                this.inputDelToTextarea(); 
+                break;
         }
     },
 
@@ -350,6 +371,18 @@ const Keyboard = {
         });
     },
 
+    inputDelToTextarea() {
+        let start = input.selectionStart;
+        if (input.selectionStart != input.selectionEnd) {
+            input.value = input.value.slice(0, input.selectionStart) + input.value.slice(input.selectionEnd);
+            input.selectionEnd = start;
+        } else if (input.selectionStart != input.value.length) {
+            input.value = input.value.slice(0, input.selectionStart) + input.value.slice(input.selectionEnd +1);
+            input.selectionStart = start ;
+            input.selectionEnd = start ;
+        }
+    },
+
     inputKeyToTextarea(str) {
         let start = input.selectionStart;
         if (input.selectionStart != input.selectionEnd) {
@@ -418,24 +451,23 @@ const Keyboard = {
         input.selectionStart = start + 1;
         input.selectionEnd = start + 1;
     },
-   
+
     listenToTheKey(event) {
-        
+
         const SpetialKey = ['Backspace', 'Tab', 'Del', 'CapsLock', 'Enter', 'ShiftLeft', 'ArrowUp', 'ShiftRight',
             'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight',].indexOf(event.code) !== -1;
 
         if (Keyboard.isButtonInTheKeyboard(event)) {
             event.preventDefault();
-           
+
             if (SpetialKey) {
-                console.log('1');
                 Keyboard.isSpetialKey(event.code);
 
             } else {
 
                 document.getElementById(event.code).classList.add('key_active');
                 Keyboard.inputKeyToTextarea(document.getElementById(event.code).innerHTML)
-               
+
             }
         }
 

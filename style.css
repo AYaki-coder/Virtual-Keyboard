@@ -3,8 +3,10 @@
     padding: 0;
     outline: none;
 }
-
-.html{
+body{
+    background-color: rgb(255, 226, 232);
+}
+html{
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
 
@@ -15,23 +17,22 @@
 }
 
 .main-heading{
-    font-size: 2.5rem; 
+    font-size: 3rem; 
     font-style: bold;
     margin-bottom: 5vh;
     text-align: center;
-    color: rgb(175, 35, 42);
+    color: rgb(119, 34, 34);
     
 }
 
 .description{
-    font-size: 1.2rem; 
+    font-size: 2rem; 
     max-width: 1020px;
     margin:0 auto 7vh;;
 }
 .textarea{
     display: block;
     margin:0 auto;
-    /* background-color: gray ; */
     background-color: rgb(175, 35, 42, 0.8);
     color: white;
     max-width: 1020px;
@@ -40,17 +41,21 @@
     margin-bottom: 7vh;
     resize: none;
     border-radius: 5px;
+    font-size:2rem;
+    line-height: 3rem;
 
 }
 
 .keyboard{
  max-width:1020px;
- max-height: 300px;
+ max-height: 400px;
  margin: 0 auto;
  border: 2px solid black;
  border-radius: 5px;
  background-color: rgb(190, 190, 190);
- padding: 5px 5px;
+ padding: 4px 4px;
+ position: relative;
+ font-size: 2rem;
 
 }
 
@@ -60,7 +65,7 @@
 
 }
 .keyboard__key{
-    height: 50px;
+    height: 60px;
     width: 6%;
     max-width: 90px;
     margin: 3px;
@@ -68,16 +73,48 @@
     border:none;
     background-color:#000000cc;
     color:white;
-    font-size:1.3rem;
     outline: none;
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     box-shadow: 3px 3px 4px 2px #00000099;
+    vertical-align: top;
+    transition: 0.2s;
 
 }
 
+.key_backspace{
+    width: calc(22% - 8px - 76px);
+    max-width: 1000px;
+    
+}
+.key_tab{
+    width: calc(16% - 8px - 82px);
+    max-width: 1000px;
+}
+.key_caps{
+
+    width:10%;
+    max-width: 1000px;
+}
+.key_enter{
+    width: calc(16% + 2px);
+    max-width: 1000px;
+
+}
+.key_shift{
+    width: calc((100% - 11 * 6% - 13 * 6px) / 2);
+    max-width: 1000px;
+}
+.key_ctrl{
+    width: calc(6% + 4px);
+    max-width: 1000px;
+}
+.key_space{
+    width: calc(100% - 36% - 12% - 12px - 8px - 43px);
+    max-width: 1000px;
+}
 .key_active{
     background-color: rgb(175, 35, 42); 
     box-shadow: -3px -3px 4px 2px #00000099;

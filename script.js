@@ -1,3 +1,5 @@
+let input;
+
 const Keyboard = {
 
     KeyboardLayout: {
@@ -27,6 +29,7 @@ const Keyboard = {
             'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
         ],
     },
+
 
     createSiteElements() {
         const main = document.createElement('main');
@@ -75,12 +78,6 @@ const Keyboard = {
                 case "backspace":
                     keyElement.classList.add("key_backspace");
                     keyElement.innerHTML = createIconHTML("keyboard_backspace");
-
-                    // keyElement.addEventListener("click", () => {
-                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
-                    //     this._triggerEvent("oninput");
-                    // });
-
                     break;
 
                 case "tab":
@@ -91,39 +88,23 @@ const Keyboard = {
                 case "caps":
                     keyElement.classList.add("key_caps");
                     keyElement.innerHTML = createIconHTML("keyboard_capslock");
-
-                    // keyElement.addEventListener("click", () => {
-                    //     this._toggleCapsLock();
-                    //     keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
-                    // });
-
                     break;
 
                 case "enter":
                     keyElement.classList.add("key_enter");
                     keyElement.innerHTML = createIconHTML("keyboard_return");
-
-                    // keyElement.addEventListener("click", () => {
-                    //     this.properties.value += "\n";
-                    //     this._triggerEvent("oninput");
-                    // });
-
                     break;
 
                 case "space":
                     keyElement.classList.add("key_space");
                     keyElement.innerHTML = createIconHTML("space_bar");
-
-                    // keyElement.addEventListener("click", () => {
-                    //     this.properties.value += " ";
-                    //     this._triggerEvent("oninput");
-                    // });
-
                     break;
+
                 case "shift":
                     keyElement.innerHTML = createIconHTML("arrow_upward");
                     keyElement.classList.add("key_shift");
                     break;
+
                 case "right-shift":
                     keyElement.innerHTML = createIconHTML("arrow_upward");
                     keyElement.classList.add("key_shift");
@@ -133,27 +114,25 @@ const Keyboard = {
                     keyElement.classList.add("key_ctrl");
                     keyElement.textContent = key.toLowerCase();
                     break;
+
                 case "up":
                     keyElement.innerHTML = createIconHTML("keyboard_arrow_up");
                     break;
+
                 case "down":
                     keyElement.innerHTML = createIconHTML("keyboard_arrow_down");
                     break;
+
                 case "left":
                     keyElement.innerHTML = createIconHTML("keyboard_arrow_left");
                     break;
+
                 case "right":
                     keyElement.innerHTML = createIconHTML("keyboard_arrow_right");
                     break;
 
                 default:
-                    keyElement.textContent = key.toLowerCase();
-
-                    // keyElement.addEventListener("click", () => {
-                    //     this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
-                    //     this._triggerEvent("oninput");
-                    // });
-
+                    keyElement.textContent = key;
                     break;
             }
 
@@ -168,46 +147,316 @@ const Keyboard = {
     },
 
     isButtonInTheKeyboard(event) {
-        for (let i = 0; i <  Keyboard.KeyboardLayout.code.length; i++) {
-            if (event.code ==  Keyboard.KeyboardLayout.code[i]) {
+        for (let i = 0; i < Keyboard.KeyboardLayout.code.length; i++) {
+            if (event.code == Keyboard.KeyboardLayout.code[i]) {
                 return true;
             }
         }
         return false;
     },
 
-    listenToTheKey(event) {
+    isSpetialKey(event) {
+        switch (event) {
+            case 'Backspace':
 
-        const input = document.querySelector('textarea');
+                document.getElementById(event).classList.add('key_active');
+                this.inputBackspaceToTextarea();
+                break;
+
+            case 'Tab':
+                document.getElementById(event).classList.add('key_active');
+                this.inputTabToTextarea();
+                break;
+
+            case 'CapsLock':
+                const capsKey = document.getElementById(event);
+                document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
+
+                    const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
+                    if (!ConstKey && ((+key.childElementCount) == 0)) {
+
+                        key.innerHTML = key.innerHTML == key.innerHTML.toLowerCase() ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase();
+                    }
+                });
+
+                if (capsKey.classList.contains('key_active')) {
+
+                    capsKey.classList.remove('key_active');
+                } else {
+
+                    capsKey.classList.add('key_active');
+                }
+                break;
+
+            case 'Enter':
+                document.getElementById(event).classList.add('key_active');
+                this.inputEnterToTextarea();
+                break;
+
+            case 'Space':
+                document.getElementById(event).classList.add('key_active');
+                this.inputSpaceToTextarea();
+                break;
+
+            case 'ShiftLeft':
+
+                document.getElementById(event).classList.add('key_active');
+                this.encodeShiftru();
+                break;
+
+            case 'ShiftRight':
+                document.getElementById(event).classList.add('key_active');
+                this.encodeShiftru();
+                break;
+
+            case 'ArrowUp':
+                document.getElementById(event).classList.add('key_active');
+                this.inputArrowUpToTextarea()
+                break;
+
+            case 'ArrowDown':
+                document.getElementById(event).classList.add('key_active');
+                this.inputArrowDownToTextarea();
+                break;
+
+            case 'ArrowLeft':
+                document.getElementById(event).classList.add('key_active');
+                this.inputArrowLeftToTextarea();
+
+                break;
+            case 'ArrowRight':
+                document.getElementById(event).classList.add('key_active');
+                this.inputArrowRightToTextarea();
+                break;
+        }
+    },
+
+    encodeShiftru() {
+        document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
+
+            const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
+            if (!ConstKey && ((+key.childElementCount) == 0)) {
+                switch (key.innerHTML) {
+
+                    case '1':
+                        key.innerHTML = '!';
+                        break;
+                    case '2':
+                        key.innerHTML = '"';
+                        break;
+                    case '3':
+                        key.innerHTML = '№';
+                        break;
+                    case '4':
+                        key.innerHTML = ';';
+                        break;
+                    case '5':
+                        key.innerHTML = '%';
+                        break;
+                    case '6':
+                        key.innerHTML = ':';
+                        break;
+                    case '7':
+                        key.innerHTML = '?';
+                        break;
+                    case '8':
+                        key.innerHTML = '*';
+                        break;
+                    case '9':
+                        key.innerHTML = '(';
+                        break;
+                    case '0':
+                        key.innerHTML = ')';
+                        break;
+                    case '-':
+                        key.innerHTML = '_';
+                        break;
+                    case '=':
+                        key.innerHTML = '+';
+                        break;
+                    case '.':
+                        key.innerHTML = ',';
+                        break;
+                    case '\\':
+                        key.innerHTML = '/';
+                        break;
+
+                    default:
+                        key.innerHTML = key.innerHTML == key.innerHTML.toLowerCase() ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase();
+                        break;
+                }
+
+            }
+        });
+
+    },
+
+    decodeShiftru() {
+        document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
+
+            const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
+            if (!ConstKey && ((+key.childElementCount) == 0)) {
+                switch (key.innerHTML) {
+
+                    case '!':
+                        key.innerHTML = '1';
+                        break;
+                    case '"':
+                        key.innerHTML = '2';
+                        break;
+                    case '№':
+                        key.innerHTML = '3';
+                        break;
+                    case ';':
+                        key.innerHTML = '4';
+                        break;
+                    case '%':
+                        key.innerHTML = '5';
+                        break;
+                    case ':':
+                        key.innerHTML = '6';
+                        break;
+                    case '?':
+                        key.innerHTML = '7';
+                        break;
+                    case '*':
+                        key.innerHTML = '8';
+                        break;
+                    case '(':
+                        key.innerHTML = '9';
+                        break;
+                    case ')':
+                        key.innerHTML = '0';
+                        break;
+                    case '_':
+                        key.innerHTML = '-';
+                        break;
+                    case '+':
+                        key.innerHTML = '=';
+                        break;
+                    case ',':
+                        key.innerHTML = '.';
+                        break;
+                    case '/':
+                        key.innerHTML = '\\';
+                        break;
+
+                    default:
+                        key.innerHTML = key.innerHTML == key.innerHTML.toLowerCase() ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase();
+                        break;
+                }
+
+            }
+        });
+    },
+
+    inputKeyToTextarea(str) {
+        let start = input.selectionStart;
+        if (input.selectionStart != input.selectionEnd) {
+            input.value = input.value.slice(0, input.selectionStart) + str + input.value.slice(input.selectionEnd);
+        } else if (input.value.length == input.selectionStart) {
+            input.value += str;
+        } else {
+            input.value = input.value.slice(0, input.selectionStart) + str + input.value.slice(input.selectionEnd);
+        }
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+    },
+
+    inputBackspaceToTextarea() {
+        let start = input.selectionStart;
+        if (input.selectionStart != input.selectionEnd) {
+            input.value = input.value.slice(0, input.selectionStart) + input.value.slice(input.selectionEnd);
+            input.selectionEnd = start;
+        } else if (input.selectionStart > 0) {
+            input.value = input.value.slice(0, input.selectionStart - 1) + input.value.slice(input.selectionEnd);
+            input.selectionStart = start - 1;
+            input.selectionEnd = start - 1;
+        }
+    },
+
+    inputSpaceToTextarea() {
+        let start = input.selectionStart;
+        input.value = input.value.slice(0, input.selectionStart) + ' ' + input.value.slice(input.selectionEnd);
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+    },
+
+    inputTabToTextarea() {
+        let start = input.selectionStart;
+        input.value = input.value.slice(0, input.selectionStart) + '\t' + input.value.slice(input.selectionEnd);
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+    },
+
+    inputEnterToTextarea() {
+        let start = input.selectionStart;
+        input.value = input.value.slice(0, input.selectionStart) + '\n' + input.value.slice(input.selectionEnd);
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+    },
+    inputArrowLeftToTextarea() {
+        if (input.selectionStart > 0) {
+            input.selectionStart = input.selectionEnd = input.selectionStart - 1;
+        }
+    },
+    inputArrowRightToTextarea() {
+        if (input.selectionEnd < input.value.length) {
+            input.selectionStart = input.selectionEnd = input.selectionEnd + 1;
+        }
+    },
+
+    inputArrowDownToTextarea() {
+        let start = input.selectionStart;
+        input.value = input.value.slice(0, input.selectionStart) + '▼' + input.value.slice(input.selectionEnd);
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+    },
+    inputArrowUpToTextarea() {
+        let start = input.selectionStart;
+        input.value = input.value.slice(0, input.selectionStart) + '▲' + input.value.slice(input.selectionEnd);
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+    },
+   
+    listenToTheKey(event) {
+        
         const SpetialKey = ['Backspace', 'Tab', 'Del', 'CapsLock', 'Enter', 'ShiftLeft', 'ArrowUp', 'ShiftRight',
             'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight',].indexOf(event.code) !== -1;
-       
-        if(Keyboard.isButtonInTheKeyboard(event)){
+
+        if (Keyboard.isButtonInTheKeyboard(event)) {
             event.preventDefault();
-            document.getElementById(event.code).classList.add('key_active');
+           
             if (SpetialKey) {
                 console.log('1');
-    
+                Keyboard.isSpetialKey(event.code);
+
             } else {
-                input.value += document.getElementById(event.code).innerHTML;
-            } 
+
+                document.getElementById(event.code).classList.add('key_active');
+                Keyboard.inputKeyToTextarea(document.getElementById(event.code).innerHTML)
+               
+            }
         }
-       
+
     },
 
     stopListeningToTheKey(event) {
-        if(Keyboard.isButtonInTheKeyboard(event)){
-            document.getElementById(event.code).classList.remove('key_active'); 
+
+        if (Keyboard.isButtonInTheKeyboard(event) && (event.code !== 'CapsLock')) {
+
+            document.getElementById(event.code).classList.remove('key_active');
+            if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+                Keyboard.decodeShiftru();
+            }
         }
-        
+
     },
-
-    // createKey() {}
-
 };
 
 window.addEventListener('load', () => {
     Keyboard.createSiteElements();
+    input = document.querySelector('textarea');
     document.addEventListener('keydown', Keyboard.listenToTheKey);
     document.addEventListener('keyup', Keyboard.stopListeningToTheKey);
 

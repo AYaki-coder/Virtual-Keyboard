@@ -31,7 +31,8 @@ const Keyboard = {
     },
 
     proterties: {
-
+        backspace: false,
+        shift: false,
         lastMouseClickedKey: null,
         landuageRU: null,
     },
@@ -153,7 +154,7 @@ const Keyboard = {
     },
 
     changeLanguage() {
-        
+
         if (Keyboard.proterties.landuageRU != true) {
             document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
 
@@ -166,7 +167,7 @@ const Keyboard = {
             Keyboard.proterties.landuageRU = true;
             localStorage.setItem('languageRU', 'true');
         } else {
-            
+
             document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
 
                 const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
@@ -237,12 +238,20 @@ const Keyboard = {
             case 'ShiftLeft':
 
                 document.getElementById(event).classList.add('key_active');
-                this.encodeShiftru();
+                if (this.proterties.landuageRU == true) {
+                    this.encodeShiftRu();
+                } else {
+                    this.encodeShiftEn();
+                }
                 break;
 
             case 'ShiftRight':
                 document.getElementById(event).classList.add('key_active');
-                this.encodeShiftru();
+                if (this.proterties.landuageRU == true) {
+                    this.encodeShiftRu();
+                } else {
+                    this.encodeShiftEn();
+                }
                 break;
 
             case 'ArrowUp':
@@ -290,8 +299,175 @@ const Keyboard = {
                 break;
         }
     },
+    encodeShiftEn() {
+        document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
 
-    encodeShiftru() {
+            const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
+            if (!ConstKey && ((+key.childElementCount) == 0)) {
+
+                switch (key.innerHTML) {
+                    case '`':
+                        key.innerHTML = '~';
+                        break;
+                    case '1':
+                        key.innerHTML = '!';
+                        break;
+                    case '2':
+                        key.innerHTML = '@';
+                        break;
+                    case '3':
+                        key.innerHTML = '#';
+                        break;
+                    case '4':
+                        key.innerHTML = '$';
+                        break;
+                    case '5':
+                        key.innerHTML = '%';
+                        break;
+                    case '6':
+                        key.innerHTML = '^';
+                        break;
+                    case '7':
+                        key.innerHTML = '&';
+                        break;
+                    case '8':
+                        key.innerHTML = '*';
+                        break;
+                    case '9':
+                        key.innerHTML = '(';
+                        break;
+                    case '0':
+                        key.innerHTML = ')';
+                        break;
+                    case '-':
+                        key.innerHTML = '_';
+                        break;
+                    case '=':
+                        key.innerHTML = '+';
+                        break;
+                    case '[':
+                        key.innerHTML = '{';
+                        break;
+                    case ']':
+                        key.innerHTML = '}';
+                        break;
+                    case '\\':
+                        key.innerHTML = '|';
+                        break;
+                    case ';':
+                        key.innerHTML = ':';
+                        break;
+
+                    case '\'':
+                        key.innerHTML = '"';
+                        break;
+                    case ',':
+                        key.innerHTML = '<';
+                        break;
+                    case '.':
+                        key.innerHTML = '>';
+                        break;
+                    case '/':
+                        key.innerHTML = '?';
+                        break;
+
+                    default:
+                        key.innerHTML = key.innerHTML == key.innerHTML.toLowerCase() ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase();
+                        break;
+                }
+
+            }
+
+
+        });
+
+    },
+
+    decodeShiftEn() {
+        document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
+
+            const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
+            if (!ConstKey && ((+key.childElementCount) == 0)) {
+
+                switch (key.innerHTML) {
+                    case '~':
+                        key.innerHTML = '`';
+                        break;
+                    case '!':
+                        key.innerHTML = '1';
+                        break;
+                    case '@':
+                        key.innerHTML = '2';
+                        break;
+                    case '#':
+                        key.innerHTML = '3';
+                        break;
+                    case '$':
+                        key.innerHTML = '4';
+                        break;
+                    case '%':
+                        key.innerHTML = '5';
+                        break;
+                    case '^':
+                        key.innerHTML = '6';
+                        break;
+                    case '&':
+                        key.innerHTML = '7';
+                        break;
+                    case '*':
+                        key.innerHTML = '8';
+                        break;
+                    case '(':
+                        key.innerHTML = '9';
+                        break;
+                    case ')':
+                        key.innerHTML = '0';
+                        break;
+                    case '_':
+                        key.innerHTML = '-';
+                        break;
+                    case '+':
+                        key.innerHTML = '=';
+                        break;
+                    case '[':
+                        key.innerHTML = '{';
+                        break;
+                    case '}':
+                        key.innerHTML = ']';
+                        break;
+                    case '|':
+                        key.innerHTML = '\\';
+                        break;
+                    case ':':
+                        key.innerHTML = ';';
+                        break;
+
+                    case '"':
+                        key.innerHTML = '\'';
+                        break;
+                    case '<':
+                        key.innerHTML = ',';
+                        break;
+                    case '>':
+                        key.innerHTML = '.';
+                        break;
+                    case '?':
+                        key.innerHTML = '/';
+                        break;
+
+                    default:
+                        key.innerHTML = key.innerHTML == key.innerHTML.toLowerCase() ? key.innerHTML.toUpperCase() : key.innerHTML.toLowerCase();
+                        break;
+                }
+
+            }
+
+
+        });
+
+    },
+
+    encodeShiftRu() {
         document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
 
             const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
@@ -351,7 +527,7 @@ const Keyboard = {
 
     },
 
-    decodeShiftru() {
+    decodeShiftRu() {
         document.querySelectorAll('.keyboard__key').forEach((key, indexkey) => {
 
             const ConstKey = ["del", "ctrl", "win", "alt",].indexOf(key.innerHTML) !== -1;
@@ -493,26 +669,28 @@ const Keyboard = {
     },
 
     listenToTheKey(event) {
-      
+
         const SpetialKey = ['Backspace', 'Tab', 'Delete', 'CapsLock', 'Enter', 'ShiftLeft', 'ArrowUp', 'ShiftRight',
             'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight',].indexOf(event.code) !== -1;
 
         if (Keyboard.isButtonInTheKeyboard(event)) {
+
             event.preventDefault();
-            if (event.ctrlKey == true && event.altKey == true) {
-                Keyboard.isSpetialKey(event.code);
-                Keyboard.changeLanguage();
-            } else if (SpetialKey) {
-                Keyboard.isSpetialKey(event.code);
+            if (!event.repeat) {
+                if (event.ctrlKey == true && event.altKey == true) {
+                    Keyboard.isSpetialKey(event.code);
+                    Keyboard.changeLanguage();
+                } else if (SpetialKey) {
+                    Keyboard.isSpetialKey(event.code);
 
-            } else {
+                } else {
 
-                document.getElementById(event.code).classList.add('key_active');
-                Keyboard.inputKeyToTextarea(document.getElementById(event.code).innerHTML)
+                    document.getElementById(event.code).classList.add('key_active');
+                    Keyboard.inputKeyToTextarea(document.getElementById(event.code).innerHTML)
 
+                }
             }
         }
-
     },
 
     stopListeningToTheKey(event) {
@@ -521,7 +699,11 @@ const Keyboard = {
 
             document.getElementById(event.code).classList.remove('key_active');
             if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-                Keyboard.decodeShiftru();
+                if (Keyboard.proterties.landuageRU == true) {
+                    Keyboard.decodeShiftRu();
+                } else {
+                    Keyboard.decodeShiftEn();
+                }
             }
         }
 
